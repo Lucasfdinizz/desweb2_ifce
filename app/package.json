@@ -1,7 +1,7 @@
 {
   "name": "publicitario",
   "version": "1.0.0",
-  "description": "Projeto desWebII",
+  "description": "Projeto DesWebII",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js"
@@ -9,7 +9,7 @@
   "keywords": [
     "DesWebII"
   ],
-  "author": "Francisco Lourival Garrido Neto",
+  "author": "Lucas de França Diniz",
   "license": "Apache-2.0",
   "dependencies": {
     "nodemon": "^3.0.1"
