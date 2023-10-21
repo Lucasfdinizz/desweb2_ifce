@@ -103,9 +103,9 @@ function autor(req, res) {
     res.write('<p>Nome: Lucas de França Diniz</p>');
     res.write('<h2>Formações Acadêmicas</h2>');
     res.write('<ul>');
-    res.write('<li>Análise e desenvolvimento de sistemas</li>');
+    res.write('<li>Análise e desenvolvimento de sistemas (Cursando)</li>');
     res.write('<li>Instituição: Universidade Estácio De Sá</li>');
-    res.write('<li>Técnico em Informática para Internet</li>');
+    res.write('<li>Técnico em Informática para Internet (Cursando)</li>');
     res.write('<li>Instituição: Instituto Federal do Ceará (IFCE)</li>');
     res.write('<li>Ano: 2023</li>');
     res.write('</ul>');
