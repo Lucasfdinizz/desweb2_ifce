@@ -1,3 +1,5 @@
+const Cabecalho = require('../models/cabecalho');
+
 class AutorView {
     render() {
         return `
@@ -7,7 +9,7 @@ class AutorView {
                 <meta charset="UTF-8">
             </head>
                 <body>
-                    <a href="/index"><button>Início</button></a>
+                    ${Cabecalho.render()}                    
                     <h2>Autor</h2>
                     <ul>
                         <li>Lucas de França Diniz</li>
