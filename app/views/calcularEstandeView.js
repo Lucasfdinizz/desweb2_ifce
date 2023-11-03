@@ -1,3 +1,5 @@
+const Cabecalho = require('../models/cabecalho');
+
 class CalcularEstandeView {
     render(lado, area, isEstandeMedio) {
         return `
@@ -7,7 +9,7 @@ class CalcularEstandeView {
                 <meta charset="UTF-8">
             </head>
                 <body>
-                    <a href="/index"><button>Início</button></a>
+                    ${Cabecalho.render()}               
                     <h2>Explicação da conta</h2>
                     <p>A área de um heptadecágono regular pode ser calculada usando a fórmula:</p>
                     <p><strong>Área = (17/4) * lado^2 * (1 / tan(π/17))</strong></p>
@@ -20,7 +22,7 @@ class CalcularEstandeView {
                     <p>Lado do heptadecágono inserido: ${lado}</p>
                     <p>Área do estande: ${area.toFixed(2)} metros quadrados</p>
                     ${isEstandeMedio ? '<p>É um estande médio.</p>' : '<p>É um estande que não segue o padrão.</p>'}
-                    <h4><footer>Desenvolvido por <a href="/autor">Lucas Diniz</a></footer><h4>
+                    <h4><footer>Desenvolvido por Lucas Diniz</footer><h4>
                 </body>
             </html>
         `;

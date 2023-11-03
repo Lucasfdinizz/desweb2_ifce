@@ -1,11 +1,10 @@
-const EstandeModel = require('../models/estandeModel');
+const Estande = require('../models/estande');
 const CalcularEstandeView = require('../views/calcularEstandeView');
 const querystring = require('querystring');
-const Task = require('../models/tasks'); 
 
 class CalcularEstandeController {
   constructor() {
-    this.model = new EstandeModel();
+    this.estande = new Estande(); 
     this.view = new CalcularEstandeView();
   }
 
@@ -19,17 +18,10 @@ class CalcularEstandeController {
       req.on('end', () => {
         const dadosDoFormulario = querystring.parse(corpoTexto);
         let lado = parseFloat(dadosDoFormulario.lado);
-        let area = this.model.calcularArea(lado);
-        const isEstandeMedio = area >= 60 && area <= 80;
+        let area = this.estande.calcularArea(lado);
+        let isEstandeMedio = this.estande.isMedio(area);
 
-        const tasks = [];
-
-        const newTask = Task.createTask("Tarefa 1", "Descrição da Tarefa 1");
-        tasks.push(newTask);
-
-        const allTasks = Task.listTasks(tasks);
-
-        const html = this.view.render(lado, area, isEstandeMedio, allTasks);
+        const html = this.view.render(lado, area, isEstandeMedio);
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.write(html);
         res.end();
