@@ -20,7 +20,7 @@ class CalcularEstande {
                     <p>A fórmula calcula a área multiplicando o comprimento do lado pelo seu quadrado e pela tangente do ângulo π/17. O resultado é a área do heptadecágono.</p>
                     <h2>Resposta:</h2>
                     <p>Lado do heptadecágono inserido: ${lado}</p>
-                    <p>Área do estande: ${area.toFixed(2)} metros quadrados</p>
+                    <p>Área do estande: ${area} metros quadrados</p>
                     ${isEstandeMedio ? '<p>É um estande médio.</p>' : '<p>É um estande que não segue o padrão.</p>'}
                     <h4><footer>Desenvolvido por Lucas Diniz</footer><h4>
                 </body>
