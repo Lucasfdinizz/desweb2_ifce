@@ -1,8 +1,8 @@
 const http = require('http');
 const { parse } = require('querystring');
-const IndexController = require('./controllers/indexController'); 
-const CalcularEstandeController = require('./controllers/calcularEstandeController'); 
-const AutorController = require('./controllers/autorController'); 
+const IndexController = require('./controllers/IndexController'); 
+const CalcularEstandeController = require('./controllers/CalcularEstandeController'); 
+const AutorController = require('./controllers/AutorController'); 
 const PORT = 3000;
 const server = http.createServer(function (req, res) {
     let [url, queryString] = req.url.split('?');

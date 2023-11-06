@@ -1,4 +1,8 @@
 class Estande {
+    constructor(lado) {
+        this.area = this.calcularArea(lado)
+        this.medio = this.isMedio(this.area)
+    }
     calcularArea(lado) {
         return (17 / 4) * lado * lado * (1 / Math.tan(Math.PI / 17));
     }

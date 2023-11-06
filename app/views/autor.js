@@ -1,6 +1,6 @@
-const Cabecalho = require('../models/cabecalho');
+const Cabecalho = require('./cabecalho');
 
-class AutorView {
+class Autor {
     render() {
         return `
             <!DOCTYPE html>
@@ -33,4 +33,4 @@ class AutorView {
     }
 }
 
-module.exports = AutorView;
+module.exports = Autor;

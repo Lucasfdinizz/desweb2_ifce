@@ -1,6 +1,6 @@
-const Cabecalho = require('../models/cabecalho');
+const Cabecalho = require('./cabecalho');
 
-class CalcularEstandeView {
+class CalcularEstande {
     render(lado, area, isEstandeMedio) {
         return `
             <!DOCTYPE html>
@@ -29,4 +29,4 @@ class CalcularEstandeView {
     }
 }
 
-module.exports = CalcularEstandeView;
+module.exports = CalcularEstande;

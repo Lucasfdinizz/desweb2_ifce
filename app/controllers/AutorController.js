@@ -1,11 +1,11 @@
-const IndexView = require('../views/indexView'); 
+const Autor = require('../views/autor');
 
-class IndexController {
+class AutorController {
     constructor() {
-        this.view = new IndexView();
+        this.view = new Autor();
     }
 
-    index(req, res) {
+    autor(req, res) {
         const html = this.view.render();
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.write(html);
@@ -13,4 +13,4 @@ class IndexController {
     }
 }
 
-module.exports = IndexController;
+module.exports = AutorController;
