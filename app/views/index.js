@@ -1,6 +1,6 @@
-const Cabecalho = require('../models/cabecalho');
+const Cabecalho = require('./cabecalho');
 
-class IndexView {
+class Index {
     render() {
       return `
         <!DOCTYPE html>
@@ -26,4 +26,4 @@ class IndexView {
     }
   }
   
-  module.exports = IndexView;
+  module.exports = Index;
