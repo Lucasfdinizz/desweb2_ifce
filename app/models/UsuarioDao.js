@@ -26,8 +26,8 @@ class UsuarioDao {
     }
 
     validar(usuario) {
-        if (usuario.area < 0) {
-            throw new Error('mensagem_area_invalida');
+        if (!usuario.nome) {
+            throw new Error('mensagem_nome_invalido');
         }
     }
 }

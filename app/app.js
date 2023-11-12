@@ -4,9 +4,11 @@ const IndexController = require('./controllers/IndexController');
 const CalcularEstandeController = require('./controllers/CalcularEstandeController'); 
 const AutorController = require('./controllers/AutorController'); 
 const EstandeController = require('./controllers/EstandesController');
+const UsuarioController = require('./controllers/UsuariosController');
 const PORT = 3000;
 
 let estandesController = new EstandeController();
+let usuarioController = new UsuarioController();
 
 const server = http.createServer(function (req, res) {
     let [url, queryString] = req.url.split('?');
@@ -36,6 +38,18 @@ const server = http.createServer(function (req, res) {
     else if (url == '/estandes' && metodo == 'DELETE') {
         estandesController.apagar(req, res);
     } 
+    else if (url == '/usuarios' && metodo == 'GET') {
+        usuarioController.listar(req, res);
+    }
+    else if (url == '/usuarios' && metodo == 'POST') {
+        usuarioController.inserir(req, res);
+    }
+    else if (url == '/usuarios' && metodo == 'PUT') {
+        usuarioController.alterar(req, res);
+    }
+    else if (url == '/usuarios' && metodo == 'DELETE') {
+        usuarioController.apagar(req, res);
+    }
     else {
         res.writeHead(404, { 'Content-Type': 'text/html' });
         res.write('<html><head><meta charset="UTF-8"></head><body><h1>Não encontrado!</h1></body></html>');
