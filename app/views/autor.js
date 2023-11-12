@@ -1,4 +1,6 @@
 const Cabecalho = require('./cabecalho');
+const ExperienciaView = require('./experienciaView');
+const FormacaoView = require('./formacaoView');
 
 class Autor {
     render() {
@@ -9,24 +11,15 @@ class Autor {
                 <meta charset="UTF-8">
             </head>
                 <body>
-                    ${Cabecalho.render()}                    
+                    ${Cabecalho.render()}                   
                     <h2>Autor</h2>
                     <ul>
                         <li>Lucas de França Diniz</li>
                     </ul>
-                        <h2>Formações Acadêmicas</h2>
-                    <ul>
-                        <li>Análise e desenvolvimento de sistemas (Cursando)</li>
-                        <li>Instituição: Universidade Estácio De Sá</li>
-                        <li>Técnico em Informática para Internet (Cursando)</li>
-                        <li>Instituição: Instituto Federal do Ceará (IFCE)</li>
-                    </ul>
+                    <h2>Formações Acadêmicas</h2>
+                    ${FormacaoView.render()} 
                     <h2>Experiências Profissionais</h2>
-                    <ul>
-                        <li>Função: 3º Sgt</li>
-                        <li>Empresa: Exército Brasileiro</li>
-                        <li>Ano início: 2016</li>
-                    </ul>
+                    ${ExperienciaView.render()} 
                 </body>
             </html>
         `;
