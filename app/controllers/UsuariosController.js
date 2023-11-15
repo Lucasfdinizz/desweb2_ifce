@@ -1,11 +1,10 @@
 const Usuario = require('../models/Usuario');
-const UsuariosDao = require('../models/UsuarioDao');
 const utils = require('../helpers/utils')
 
 class UsuariosController {
 
-    constructor() {
-      this.usuariosDao = new usuarioDao();
+    constructor(usuarioDao) {
+      this.usuariosDao = usuarioDao;
     }
 
     listar(req, res) {
@@ -16,7 +15,7 @@ class UsuariosController {
     async inserir(req, res) {
       try {
           var body = await utils.getBody(req); 
-          let usuario = new Usuario(body.lado)
+          let usuario = new Usuario(body.nome, body.senha)
           this.usuariosDao.inserir(usuario);
           utils.renderizarJSON(res,{ 
               list: this.usuariosDao.listar(),
@@ -34,7 +33,7 @@ class UsuariosController {
       
       try {
         var body = await utils.getBody(req);
-        let usuario = new Usuario(body.lado)
+        let usuario = new Usuario(body.nome, body.senha)
         this.usuariosDao.alterar(body.id, usuario) 
         utils.renderizarJSON(res,{ 
             list: this.usuariosDao.listar(),

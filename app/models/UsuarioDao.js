@@ -1,4 +1,7 @@
+const bcrypt = require('bcrypt');
+
 class UsuarioDao {
+
     constructor() {
         this.usuarios = [];
     }
@@ -9,6 +12,7 @@ class UsuarioDao {
 
     inserir(usuario) {
         this.validar(usuario);
+        usuario.senha = bcrypt.hashSync(usuario.senha, 10);
         this.usuarios.push(usuario);
     }
 
@@ -26,9 +30,21 @@ class UsuarioDao {
     }
 
     validar(usuario) {
-        if (usuario.area < 0) {
-            throw new Error('mensagem_area_invalida');
+        if (!usuario.nome) {
+            throw new Error('mensagem_nome_invalido');
         }
+        if (!usuario.senha) {
+            throw new Error('mensagem_senha_invalido');
+        }
+    }
+    autenticar(nome, senha) {
+        for (let usuario of this.listar()) {
+            
+            if (usuario.nome?.toLowerCase() == nome?.toLowerCase() && bcrypt.compareSync(senha, usuario.senha)) {
+                return usuario;
+            }
+        }
+        return null;
     }
 }
 
