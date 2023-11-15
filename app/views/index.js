@@ -14,11 +14,15 @@ class Index {
             <p><strong>Descrição:</strong></p>
             <p>Calcule a área de um estande em forma de heptadecágono. Se a área estiver dentro do intervalo de 60 a 80 metros quadrados, é um estande médio. Caso contrário, é um estande que não segue o padrão.</p>
             <form action="calcular-estande" method="post">
-                <label>
-                  <span>Lado do Heptadecágono</span>
-                  <input type="number" name="lado" required>                
-                </label>
-                <button>Calcular</button>
+              <label>
+                <span>Nome</span>
+                <input name="nome" required>
+              </label>
+              <label>
+                <span>Lado do Heptadecágono</span>
+                <input type="number" name="lado" required>                
+              </label>
+              <button>Calcular</button>
             </form>
           </body>
         </html>

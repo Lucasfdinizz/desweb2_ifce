@@ -1,26 +1,25 @@
-const Estande = require('../models/Estande');
-const EstandeDao = require('../models/EstandeDao');
+const Usuario = require('../models/Usuario');
 const utils = require('../helpers/utils')
 
-class EstandeController {
+class UsuariosController {
 
-    constructor() {
-      this.estandesDao = new EstandeDao();
+    constructor(usuarioDao) {
+      this.usuariosDao = usuarioDao;
     }
 
     listar(req, res) {
-      let estandes = this.estandesDao.listar()
-      utils.renderizarJSON(res, estandes)
+      let usuarios = this.usuariosDao.listar()
+      utils.renderizarJSON(res, usuarios)
     }
 
     async inserir(req, res) {
       try {
           var body = await utils.getBody(req); 
-          let estande = new Estande(body.lado)
-          this.estandesDao.inserir(estande);
+          let usuario = new Usuario(body.nome, body.senha)
+          this.usuariosDao.inserir(usuario);
           utils.renderizarJSON(res,{ 
-              list: this.estandesDao.listar(),
-              mensagem: 'mensagem_estande_cadastrado'
+              list: this.usuariosDao.listar(),
+              mensagem: 'mensagem_usuario_cadastrado'
           });
       } 
       catch (e) {
@@ -34,11 +33,11 @@ class EstandeController {
       
       try {
         var body = await utils.getBody(req);
-        let estande = new Estande(body.lado)
-        this.estandesDao.alterar(body.id, estande) 
+        let usuario = new Usuario(body.nome, body.senha)
+        this.usuariosDao.alterar(body.id, usuario) 
         utils.renderizarJSON(res,{ 
-            list: this.estandesDao.listar(),
-            mensagem: 'mensagem_estande_alterado'
+            list: this.usuariosDao.listar(),
+            mensagem: 'mensagem_usuario_alterado'
           });
       } 
       catch (e) {
@@ -51,10 +50,10 @@ class EstandeController {
     async apagar(req, res){
       try {
         var body = await utils.getBody(req);
-        this.estandesDao.apagar(body.id) 
+        this.usuariosDao.apagar(body.id) 
         utils.renderizarJSON(res,{ 
-            list: this.estandesDao.listar(),
-            mensagem: 'mensagem_estande_excluido'
+            list: this.usuariosDao.listar(),
+            mensagem: 'mensagem_usuario_excluido'
           });
       } 
       catch (e) {
@@ -65,4 +64,4 @@ class EstandeController {
     }
 }
 
-module.exports = EstandeController
+module.exports = UsuariosController

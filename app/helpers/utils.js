@@ -4,15 +4,24 @@ const utils = {
         res.write(JSON.stringify(dados));
         res.end();
     },
+    decoficarUrl: function (url) {
+      let propriedades = url.split('&');
+      let query = {};
+      for (let propriedade of propriedades) {
+          let [ variavel, valor ] = propriedade.split('=');
+          query[variavel] = valor;
+      }
+      return query;
+    },
     getBody: function (request) {
         return new Promise((resolve) => {
-          const bodyParts = [];
-          let body;
-          request.on('data', (chunk) => {
-            bodyParts.push(chunk);
-          }).on('end', () => {
-            body = JSON.parse(Buffer.concat(bodyParts).toString());
-            resolve(body)
+          let corpoTexto = '';
+          request.on('data', function (pedaco) {
+              corpoTexto += pedaco;
+          });
+          request.on('end', () => {
+              let corpo = utils.decoficarUrl(corpoTexto);
+              resolve(corpo);
           });
         });
     }
