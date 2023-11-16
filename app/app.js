@@ -9,6 +9,14 @@ const AuthController = require('./controllers/AuthController');
 const UsuarioController = require('./controllers/UsuariosController');
 const UsuarioDao = require('./models/UsuarioDao'); 
 const PORT = 3000;
+const mysql = require('mysql');
+const pool  = mysql.createPool({
+  connectionLimit : 10,
+  host            : 'bd',
+  user            : 'admin',
+  password        : 'admin',
+  database        : 'desweb2_ifce'
+});
 
 let usuarioDao = new UsuarioDao();
 let estandesController = new EstandeController();
