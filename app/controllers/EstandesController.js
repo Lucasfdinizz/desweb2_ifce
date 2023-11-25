@@ -4,12 +4,13 @@ const utils = require('../helpers/utils')
 
 class EstandeController {
 
-    constructor() {
-      this.estandesDao = new EstandeDao();
+    constructor(estandeDao) {
+      this.estandesDao = estandeDao;
     }
 
-    listar(req, res) {
-      let estandes = this.estandesDao.listar()
+    async listar(req, res) {
+      let estandes = await this.estandesDao.listar()      
+      console.log(estandes)
       utils.renderizarJSON(res, estandes)
     }
 
@@ -19,7 +20,7 @@ class EstandeController {
           let estande = new Estande(body.lado)
           this.estandesDao.inserir(estande);
           utils.renderizarJSON(res,{ 
-              list: this.estandesDao.listar(),
+              list: await this.estandesDao.listar(),
               mensagem: 'mensagem_estande_cadastrado'
           });
       } 
@@ -37,7 +38,7 @@ class EstandeController {
         let estande = new Estande(body.lado)
         this.estandesDao.alterar(body.id, estande) 
         utils.renderizarJSON(res,{ 
-            list: this.estandesDao.listar(),
+            list: await this.estandesDao.listar(),
             mensagem: 'mensagem_estande_alterado'
           });
       } 
@@ -53,7 +54,7 @@ class EstandeController {
         var body = await utils.getBody(req);
         this.estandesDao.apagar(body.id) 
         utils.renderizarJSON(res,{ 
-            list: this.estandesDao.listar(),
+            list: await this.estandesDao.listar(),
             mensagem: 'mensagem_estande_excluido'
           });
       } 
