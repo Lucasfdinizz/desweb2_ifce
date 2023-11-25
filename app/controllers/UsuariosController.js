@@ -7,8 +7,8 @@ class UsuariosController {
       this.usuariosDao = usuarioDao;
     }
 
-    listar(req, res) {
-      let usuarios = this.usuariosDao.listar()
+    async listar(req, res) {
+      let usuarios = await this.usuariosDao.listar()
       utils.renderizarJSON(res, usuarios)
     }
 
@@ -16,9 +16,8 @@ class UsuariosController {
       try {
           var body = await utils.getBody(req); 
           let usuario = new Usuario(body.nome, body.senha)
-          this.usuariosDao.inserir(usuario);
-          utils.renderizarJSON(res,{ 
-              list: this.usuariosDao.listar(),
+          await this.usuariosDao.inserir(usuario);
+          utils.renderizarJSON(res,{
               mensagem: 'mensagem_usuario_cadastrado'
           });
       } 
@@ -34,9 +33,8 @@ class UsuariosController {
       try {
         var body = await utils.getBody(req);
         let usuario = new Usuario(body.nome, body.senha)
-        this.usuariosDao.alterar(body.id, usuario) 
-        utils.renderizarJSON(res,{ 
-            list: this.usuariosDao.listar(),
+        await this.usuariosDao.alterar(body.id, usuario) 
+        utils.renderizarJSON(res, { 
             mensagem: 'mensagem_usuario_alterado'
           });
       } 
@@ -50,9 +48,8 @@ class UsuariosController {
     async apagar(req, res){
       try {
         var body = await utils.getBody(req);
-        this.usuariosDao.apagar(body.id) 
+        await this.usuariosDao.apagar(body.id) 
         utils.renderizarJSON(res,{ 
-            list: this.usuariosDao.listar(),
             mensagem: 'mensagem_usuario_excluido'
           });
       } 

@@ -1,49 +1,72 @@
+const Estande = require('./Estande');
 const bcrypt = require('bcrypt');
 
-class EstandeMsqylDao {
+class EstandeMysqlDao {
 
-    constructor() {
+    constructor(pool) {
+        this.pool = pool;
     }
 
-    listar() {
+    async listar() {
+        return new Promise((resolve, reject) => {
+            this.pool.query('SELECT * FROM Estandes', function (error, linhas, fields) {
+                if (error) {
+                    return reject('Erro: ' + error.message);
+                }
+                resolve(linhas);
+            });
+        });
     }
 
-    inserir(usuario) {
-        this.validar(usuario);
-        usuario.senha = bcrypt.hashSync(usuario.senha, 10);
-        this.usuarios.push(usuario);
+    async inserir(estande) {
+        this.validar(estande);
+        return new Promise((resolve, reject) => {
+            let sql = `INSERT INTO Estandes (area, medio) VALUES (?, ?);
+            `;
+            this.pool.query(sql, [estande.area, estande.medio], function (error, resultado, fields) {
+                if (error) {
+                    return reject('Erro: ' + error.message);
+                }
+                return resolve(resultado.insertId);
+            });
+        });
     }
 
-    alterar(id, usuario) {
-        if(id == null || id == undefined || this.usuarios[id] == undefined)
-            throw new Error('id_usuario_invalido');
-        this.validar(usuario);
-        this.usuarios[id] = usuario;
+    async alterar(id, estande) {
+        if(id == null || id == undefined)
+            throw new Error('id_estande_invalido');
+        this.validar(estande);
+        return new Promise((resolve, reject) => {
+            let sql = ` UPDATE Estandes SET area = ?, medio = ? where id = ?;`;
+            this.pool.query(sql, [estande.area, estande.medio, id], function (error, resultado, fields) {
+                if (error) {
+                    return reject('Erro: ' + error.message);
+                }
+                return resolve(resultado);
+            });
+        });
+
     }
 
-    apagar(id) {
-        if(id == null || id == undefined || this.usuarios[id] == undefined)
-            throw new Error('id_usuario_invalido');
-        this.usuarios.splice(id, 1);
+    async apagar(id) {
+        if(id == null || id == undefined)
+            throw new Error('id_estande_invalido');
+        return new Promise((resolve, reject) => {
+            let sql = ` Delete from Estandes where id = ?;`;
+            this.pool.query(sql, [id], function (error, resultado, fields) {
+                if (error) {
+                    return reject('Erro: ' + error.message);
+                }
+                return resolve(resultado);
+            });
+        });
     }
 
-    validar(usuario) {
-        if (!usuario.nome) {
-            throw new Error('mensagem_nome_invalido');
+    validar(estande) {
+        if (estande.area < 0) {
+            throw new Error('mensagem_area_invalida');
         }
-        if (!usuario.senha) {
-            throw new Error('mensagem_senha_invalido');
-        }
-    }
-    autenticar(nome, senha) {
-        for (let usuario of this.listar()) {
-            
-            if (usuario.nome?.toLowerCase() == nome?.toLowerCase() && bcrypt.compareSync(senha, usuario.senha)) {
-                return usuario;
-            }
-        }
-        return null;
     }
 }
 
-module.exports = EstandeMsqylDao;
+module.exports = EstandeMysqlDao;

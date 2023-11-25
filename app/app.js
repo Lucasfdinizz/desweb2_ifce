@@ -7,22 +7,23 @@ const AutorController = require('./controllers/AutorController');
 const EstandeController = require('./controllers/EstandesController');
 const AuthController = require('./controllers/AuthController');
 const UsuarioController = require('./controllers/UsuariosController');
-const UsuarioDao = require('./models/UsuarioDao'); 
+const UsuarioMysqlDao = require('./models/UsuarioMysqlDao'); 
+const EstandeMysqlDao = require('./models/EstandeMysqlDao'); 
 const PORT = 3000;
 const mysql = require('mysql');
 const pool  = mysql.createPool({
   connectionLimit : 10,
   host            : 'bd',
-  user            : 'admin',
-  password        : 'admin',
-  database        : 'desweb2_ifce'
+  user            : process.env.MARIADB_USER,
+  password        : process.env.MARIADB_PASSWORD,
+  database        : process.env.MARIADB_DATABASE
 });
 
-let usuarioDao = new UsuarioDao();
-let estandesController = new EstandeController();
+let usuarioDao = new UsuarioMysqlDao(pool);
+let estandeDao = new EstandeMysqlDao(pool);
+let estandesController = new EstandeController(estandeDao);
 let usuarioController = new UsuarioController(usuarioDao);
 let authController = new AuthController(usuarioDao);
-
 const server = http.createServer(function (req, res) {
     let [url, queryString] = req.url.split('?');
     let metodo = req.method
@@ -64,7 +65,7 @@ const server = http.createServer(function (req, res) {
     else if (url == '/usuarios' && metodo == 'DELETE') {
         authController.autorizar(req, res, function() {
             usuarioController.apagar(req, res);
-        },['admin']);
+       },['admin']);
     } 
     else if (url == '/estandes' && metodo == 'GET') {
         estandesController.listar(req, res);
