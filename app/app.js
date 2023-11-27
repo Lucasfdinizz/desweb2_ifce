@@ -1,5 +1,4 @@
 const http = require('http');
-require('dotenv').config();
 const { parse } = require('querystring');
 const IndexController = require('./controllers/IndexController'); 
 const CalcularEstandeController = require('./controllers/CalcularEstandeController'); 
