@@ -8,6 +8,8 @@ INSERT INTO Papeis (nome) VALUES ("Admin");
 
 CREATE TABLE Estandes (
     id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100),
+    lado INT,
     area FLOAT(10,2),
     medio BOOLEAN
 );

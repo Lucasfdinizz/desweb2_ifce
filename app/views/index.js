@@ -1,5 +1,4 @@
 const Cabecalho = require('./cabecalho');
-
 class Index {
     render() {
       return `
@@ -7,66 +6,84 @@ class Index {
       <html lang="en">
       <head>
           <meta charset="UTF-8">
+          <script src="/_js/indexScripts.js"></script>
       </head>
-          <body>
-          ${Cabecalho.render()}          
-          <h2>Cálculo da Área de um Estande em forma de Heptadecágono</h2>
-          <p><strong>Descrição:</strong></p>
-          <p>Calcule a área de um estande em forma de heptadecágono. Se a área estiver dentro do intervalo de 60 a 80 metros quadrados, é um estande médio. Caso contrário, é um estande que não segue o padrão.</p>
-          
-              <label>
-              <span>Nome</span>
-              <input id="nome" name="nome" required>
-              </label>
-              <label>
-              <span>Lado do Heptadecágono</span>
-              <input type="number" name="lado" id="lado" required>                
-              </label>
-              <button onclick="calcular()">Calcular</button>
-      
-              <div class="card">
-                 <h2>Ultima resposta</h2>
-                 <div id="resposta"></div>
-              </div>
-              <div class="card">
-                  <h2>Respostas anteriores</h2>
-                  <div id="historico"></div>
-              </div>
-          </body>
+        <body>
+        ${Cabecalho.render()}          
+        <h2>Cálculo da Área de um Estande em forma de Heptadecágono</h2>
+        <p><strong>Descrição:</strong></p>
+        <p>Calcule a área de um estande em forma de heptadecágono. Se a área estiver dentro do intervalo de 60 a 80 metros quadrados, é um estande médio. Caso contrário, é um estande que não segue o padrão.</p>
+            <div id="feedback">
+            </div>
+            <form method="post" onSubmit="event.preventDefault(); calcular();">
+                <input id="estandeId" name="id" type="hidden">
+                <label>
+                <span>Nome</span>
+                <input id="nome" name="nome" required>
+                </label>
+                <label>
+                <span>Lado do Heptadecágono</span>
+                <input type="number" name="lado" id="lado" required>                
+                </label>
+                <button id="btnSubmit">Calcular</button>
+            </form>
+
+            <div class="card">
+                <button onclick="listar();">Listar</button>
+            </div>
+            
+            <div class="card">
+                <h2>Estandes</h2>
+                <table id="historicoTable">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Lado</th>
+                            <th>Área</th>
+                            <th>Médio</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="historico">
+                    </tbody>
+                </table>
+            </div>
+        </body>
       </html>
-      <script>
-          function calcular(){
-              let nome = document.getElementById("nome").value.trim()
-              let lado = document.getElementById("lado").value.trim()
-              if(nome.length == 0){
-                  alert("Insira um nome válido")
-                  return
-              }
-              if(lado.length == 0 || lado < 0){
-                  alert("Insira um número válido")
-                  return
-              }
-              let resposta = document.getElementById("resposta")
-              let area = calcularArea(lado);
-              let isEstandeMedio = isMedio(area);
-              let text = '<p>Lado do heptadecágono inserido:' + lado + '</p><p>Área do estande: '+ area +'metros quadrados</p>'
-              text += isEstandeMedio ? '<p>É um estande médio.</p>' : '<p>É um estande que não segue o padrão.</p>'
-              if(resposta.innerHTML.length > 0)
-                  salvarHistorico(resposta.innerHTML)
-              resposta.innerHTML = text
-          }
-          function salvarHistorico(text){
-              let historico = document.getElementById("historico")
-              historico.innerHTML = text + historico.innerHTML 
-          }
-          function calcularArea(lado) {
-              let valor = (17 / 4) * lado * lado * (1 / Math.tan(Math.PI / 17))
-              return valor.toFixed(2);
-          }
-          function isMedio(area) {
-              return area >= 60 && area <= 80;
-          }
-      </script>
+      <style>
+        .card{
+            padding: 10px 0;
+        }
+        #historicoTable{
+            border: 1px solid black;
+            min-width: 750px
+        }
+        #historicoTable tr{
+            border: 1px solid
+        }
+        #historicoTable tr td{
+            text-align: center;
+            padding: 5px;
+        }
+        #historicoTable tr th{
+            text-align: center;
+            width: 20%;
+            padding: 5px;
+        }
+        #feedback{
+            padding: 20px 0 20px 0;
+        }
+        .sucesso{
+            color: green;
+        }
+        .falha{
+            color: red;
+        }
+        table { 
+            border-collapse: collapse; 
+        }
+        
+      </style>
       `;
     }
   }

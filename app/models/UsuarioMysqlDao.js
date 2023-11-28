@@ -17,6 +17,18 @@ class UsuarioMysqlDao {
             });
         });
     }
+    async getPapel(id) {
+        return new Promise((resolve, reject) => {
+            let sql = `select nome from Papeis where id = ?;
+            `;
+            this.pool.query(sql,[id], function (error, linhas, fields) {
+                if (error) {
+                    return reject('Erro: ' + error.message);
+                }
+                resolve(linhas);
+            });
+        });
+    }
 
     async inserir(usuario) {
         this.validar(usuario);
@@ -72,8 +84,9 @@ class UsuarioMysqlDao {
             throw new Error('mensagem_senha_invalido');
         }
     }
-    autenticar(nome, senha) {
-        for (let usuario of this.listar()) {
+    async autenticar(nome, senha) {
+        let usuarios = await this.listar();
+        for (let usuario of usuarios) {
             
             if (usuario.nome?.toLowerCase() == nome?.toLowerCase() && bcrypt.compareSync(senha, usuario.senha)) {
                 return usuario;

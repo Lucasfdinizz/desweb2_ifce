@@ -21,9 +21,9 @@ class EstandeMysqlDao {
     async inserir(estande) {
         this.validar(estande);
         return new Promise((resolve, reject) => {
-            let sql = `INSERT INTO Estandes (area, medio) VALUES (?, ?);
+            let sql = `INSERT INTO Estandes (nome, area, lado, medio) VALUES (?, ?, ?, ?);
             `;
-            this.pool.query(sql, [estande.area, estande.medio], function (error, resultado, fields) {
+            this.pool.query(sql, [estande.nome, estande.area, estande.lado, estande.medio], function (error, resultado, fields) {
                 if (error) {
                     return reject('Erro: ' + error.message);
                 }
@@ -37,8 +37,8 @@ class EstandeMysqlDao {
             throw new Error('id_estande_invalido');
         this.validar(estande);
         return new Promise((resolve, reject) => {
-            let sql = ` UPDATE Estandes SET area = ?, medio = ? where id = ?;`;
-            this.pool.query(sql, [estande.area, estande.medio, id], function (error, resultado, fields) {
+            let sql = ` UPDATE Estandes SET nome = ?, area = ?, lado = ?, medio = ? where id = ?;`;
+            this.pool.query(sql, [estande.nome, estande.area, estande.lado, estande.medio, id], function (error, resultado, fields) {
                 if (error) {
                     return reject('Erro: ' + error.message);
                 }
