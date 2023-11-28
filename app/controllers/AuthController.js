@@ -24,7 +24,7 @@ class AuthController {
 
     async autenticar(req, res){
         let body = await utils.getBody(req);
-        let user = this.usuarioDao.autenticar(body.nome, body.senha);
+        let user = await this.usuarioDao.autenticar(body.nome, body.senha);
         if(user){
             let token = jwt.sign({
                 ...user
@@ -40,18 +40,20 @@ class AuthController {
         }
     }
 
-    autorizar(req, res, proximoControlador, papeisPermitidos) {
+    async autorizar(req, res, proximoControlador, papeisPermitidos) {
         let token = req.headers.authorization?.split(' ')[1];
         if(!token){
-            utils.renderizarJSON(res, {
-                mensagem: 'Não autenticado!'
-            }, 403);
+            res.setHeader('location', '/login');
+            res.statusCode = 302;
+            res.end();
             return;
         }
-        try {
+        // try {
             let usuario = jwt.verify(token, this.SEGREDO_JWT);
             req.usuario = usuario;
-
+            let papel = await this.usuarioDao.getPapel(usuario.id_papel)
+            if(papel.length > 0)
+                usuario.papel = papel[0].nome
             if (papeisPermitidos.includes(usuario.papel) || papeisPermitidos.length == 0) {
                 proximoControlador();
             }
@@ -61,11 +63,11 @@ class AuthController {
                 }, 403);
             }
 
-        } catch (e) {
-            utils.renderizarJSON(res, {
-                mensagem: 'Não autenticado!'
-            }, 401);
-        }
+        // } catch (e) {
+        //     utils.renderizarJSON(res, {
+        //         mensagem: 'Não autenticado!'
+        //     }, 401);
+        // }
 
     }
 }

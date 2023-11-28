@@ -1,6 +1,8 @@
 class Estande {
-    constructor(lado) {
+    constructor(lado, nome) {
         this.validar(lado)
+        this.nome = nome
+        this.lado = lado
         this.area = this.calcularArea(lado)
         this.medio = this.isMedio(this.area)
     }

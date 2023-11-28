@@ -7,18 +7,20 @@ class LoginView {
                 <html lang="pt-BR">
                 <head>
                     <meta charset="UTF-8">
+                    <script src="/_js/loginScripts.js"></script>
                 </head>
                 <body>
                     ${Cabecalho.render()}
                     <h1>Login</h1>
-                    <form action="autenticar" method="post">
+                    <form method="post" onSubmit="event.preventDefault(); autenticar();">
+                        <div id="resposta"></div>
                         <label>
                             <span>Nome</span>
-                            <input name="nome">
+                            <input id="nome" name="nome">
                         </label>
                         <label>
                             <span>Senha</span>
-                            <input name="senha" type="password">
+                            <input id="senha" name="senha" type="password">
                         </label>
                         <button>Ok</button>
                     </form>

@@ -9,15 +9,14 @@ class EstandeController {
     }
 
     async listar(req, res) {
-      let estandes = await this.estandesDao.listar()      
-      console.log(estandes)
+      let estandes = await this.estandesDao.listar() 
       utils.renderizarJSON(res, estandes)
     }
 
     async inserir(req, res) {
       try {
-          var body = await utils.getBody(req); 
-          let estande = new Estande(body.lado)
+          var body = await utils.getBody(req);
+          let estande = new Estande(body.lado, body.nome)
           this.estandesDao.inserir(estande);
           utils.renderizarJSON(res,{ 
               list: await this.estandesDao.listar(),
@@ -34,9 +33,13 @@ class EstandeController {
     async alterar(req, res) {
       
       try {
+        let [ url, queryString ] = req.url.split('?');
+        let urlList = url.split('/');
+        url = urlList[1];
+        let id = urlList[2];
         var body = await utils.getBody(req);
-        let estande = new Estande(body.lado)
-        this.estandesDao.alterar(body.id, estande) 
+        let estande = new Estande(body.lado, body.nome)
+        this.estandesDao.alterar(id, estande) 
         utils.renderizarJSON(res,{ 
             list: await this.estandesDao.listar(),
             mensagem: 'mensagem_estande_alterado'
@@ -51,8 +54,11 @@ class EstandeController {
 
     async apagar(req, res){
       try {
-        var body = await utils.getBody(req);
-        this.estandesDao.apagar(body.id) 
+        let [ url, queryString ] = req.url.split('?');
+        let urlList = url.split('/');
+        url = urlList[1];
+        let id = urlList[2];
+        this.estandesDao.apagar(id) 
         utils.renderizarJSON(res,{ 
             list: await this.estandesDao.listar(),
             mensagem: 'mensagem_estande_excluido'
